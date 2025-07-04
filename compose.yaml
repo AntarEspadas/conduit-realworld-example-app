@@ -1,0 +1,37 @@
+services:
+  front:
+    image: realworld-frontend
+    ports:
+      - '8080:4173'
+    depends_on:
+      - back
+  back:
+    image: realworld-backend
+    environment:
+      - JWT_KEY=supersecretkey_example
+      - NODE_ENV=production
+      - PROD_DB_USERNAME=root
+      - PROD_DB_PASSWORD=password
+      - PROD_DB_NAME=realworld
+      - PROD_DB_HOSTNAME=db
+      - PROD_DB_DIALECT=postgres
+      - PROD_DB_LOGGGIN=false
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=realworld
+      - POSTGRES_USER=root
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "realworld"]
+      interval: 5s
+      timeout: 5s
+      retries: 8
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
