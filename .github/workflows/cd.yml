@@ -15,4 +15,9 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          script: whoami
+          script: |
+            # if [ -d "$DIRECTORY" ]; then
+            #   echo "$DIRECTORY does exist."
+            # fi
+
+            git clone https://${{ github.repository }}.git
