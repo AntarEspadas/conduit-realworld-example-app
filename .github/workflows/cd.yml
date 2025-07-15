@@ -56,10 +56,11 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             if [ ! -d "realworld-antar" ]; then
-              git clone https://github.com/${{ github.repository }}.git realworld-antar
+              git clone https://github.com/${{ github.repository }}.git realworld-antar -b ${{ github.ref_name }}
             fi
 
             cd realworld-antar
+            git switch ${{ github.ref_name }}
             git pull
 
             docker compose pull
