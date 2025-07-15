@@ -1,0 +1,18 @@
+name: Liberar y desplegar la aplicación
+
+on: push
+  # release:
+  #   types: [ published ]
+
+jobs:
+  test:
+    name: Desplegar la aplicación
+    runs-on: ubuntu-latest
+    steps:
+      - name: Desplegar por SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: whoami
