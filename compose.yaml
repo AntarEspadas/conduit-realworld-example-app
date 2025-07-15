@@ -2,7 +2,7 @@ services:
   front:
     image: realworld-frontend
     ports:
-      - '8080:4173'
+      - '8080:80'
     depends_on:
       - back
   back:

@@ -10,6 +10,7 @@ COPY . .
 
 RUN npm run build
 
-EXPOSE 4173
+FROM nginx:stable-alpine3.21-slim
 
-CMD [ "npm", "run", "preview", "--", "--host" ]
+COPY --from=builder /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
