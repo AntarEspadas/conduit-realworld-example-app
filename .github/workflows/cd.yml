@@ -20,4 +20,4 @@ jobs:
             #   echo "$DIRECTORY does exist."
             # fi
 
-            git clone https://${{ github.repository }}.git
+            git clone https://github.com/${{ github.repository }}.git
