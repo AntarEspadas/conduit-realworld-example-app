@@ -16,8 +16,12 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            # if [ -d "$DIRECTORY" ]; then
-            #   echo "$DIRECTORY does exist."
-            # fi
+            if [ ! -d "realworld-antar" ]; then
+              git clone https://github.com/${{ github.repository }}.git realworld-antar
+            fi
 
-            git clone https://github.com/${{ github.repository }}.git
+            cd realworld-antar
+            git pull
+
+            docker compose pull
+            docker compose up -d
