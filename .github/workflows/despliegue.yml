@@ -23,6 +23,6 @@ jobs:
             - name: Compilar y subir imagen
               uses: docker/build-push-action@v6
               with:
-                context: ./fronted
+                context: ./frontend
                 tags: ${{ steps.meta.outputs.tags }}
                 push: true
