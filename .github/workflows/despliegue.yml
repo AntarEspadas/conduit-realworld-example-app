@@ -47,3 +47,32 @@ jobs:
                 context: ./backend
                 tags: ${{ steps.meta.outputs.tags }}
                 push: true
+    desplegar:
+        runs-on: ubuntu-latest
+        needs:
+            - docker-frontend
+            - docker-backend
+        steps:
+            # Conectarse al servidor por SSH
+            # git clone repo
+            # cd repo
+            # docker compose pull
+            # docker compose up -d
+            - name: Conectarse al servidor por SSH
+              uses: appleboy/ssh-action@v1
+              with:
+                host: ${{ secrets.SSH_HOST }}
+                username: ${{ secrets.SSH_USERNAME }}
+                key: ${{ secrets.SSH_KEY }}
+                script: |
+                    if [ ! -d "realworld-antar" ]; then
+                        git clone https://github.com/${{ github.repository }}.git -b ${{ github.ref_name }} realworld-antar
+                    fi
+
+                    cd realworld-antar
+
+                    git fetch --tags
+                    git switch --detach ${{ github.ref_name }}
+
+                    docker compose pull
+                    docker compose up -d
