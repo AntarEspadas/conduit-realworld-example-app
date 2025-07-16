@@ -1,12 +1,12 @@
 services:
   front:
-    image: realworld-frontend
+    image: antarespadas/realworld-frontend
     ports:
       - '8080:80'
     depends_on:
       - back
   back:
-    image: realworld-backend
+    image: antarespadas/realworld-backend
     env_file:
       - .env.back
     depends_on:
